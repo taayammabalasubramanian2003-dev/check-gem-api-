@@ -2,47 +2,32 @@ import streamlit as st
 import google.generativeai as genai
 import os
 
-# -------------------------
-# PAGE CONFIG
-# -------------------------
-st.set_page_config(page_title="Gemini Test", layout="centered")
-st.title("🧪 Gemini API Test")
+st.set_page_config(page_title="Gemini Test")
 
-# -------------------------
-# LOAD API KEY
-# -------------------------
+# Read API key from Streamlit Secrets
 api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
     st.error("❌ Gemini API key not found in Streamlit Secrets")
     st.stop()
 
-st.success("✅ Gemini API key detected")
-
-# -------------------------
-# GEMINI CONFIG
-# -------------------------
+# Configure Gemini
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel("models/gemini-pro")
 
-# -------------------------
-# AI FUNCTION (DEFINE FIRST)
-# -------------------------
+# Use stable model
+model = genai.GenerativeModel("models/gemini-1.5-flash")
+
+st.title("🧪 Gemini API Test")
+
 def ai_explain(prompt):
     try:
         response = model.generate_content(prompt)
         return response.text
     except Exception as e:
-        return f"⚠️ Gemini Error: {e}"
+        return f"⚠️ Error: {e}"
 
-# -------------------------
-# TEST PROMPTS
-# -------------------------
-st.subheader("🔍 Simple Test")
-st.write(ai_explain("Say hello in one sentence"))
+st.success("✅ Gemini API key detected")
 
-st.subheader("📘 Finance Test")
-st.write(ai_explain("Explain what RSI means to a beginner investor in one line"))
+if st.button("Test Gemini"):
+    st.write(ai_explain("Explain SIP investment in one simple line"))
 
-st.subheader("📈 Stock Test")
-st.write(ai_explain("Explain whether TCS stock is good for long-term investment in simple words"))
