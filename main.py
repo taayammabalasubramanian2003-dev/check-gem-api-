@@ -2,23 +2,34 @@ import streamlit as st
 import google.generativeai as genai
 import os
 
-st.set_page_config(page_title="Gemini Test")
+# ---------------------------
+# PAGE SETUP
+# ---------------------------
+st.set_page_config(page_title="Gemini API Test", layout="centered")
+st.title("🧪 Gemini API Test")
 
-# Read API key from Streamlit Secrets
+# ---------------------------
+# API KEY CHECK
+# ---------------------------
 api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
-    st.error("❌ Gemini API key not found in Streamlit Secrets")
+    st.error("❌ Gemini API key not found. Add it in Streamlit Secrets.")
     st.stop()
 
-# Configure Gemini
+st.success("✅ Gemini API key detected")
+
+# ---------------------------
+# GEMINI CONFIG
+# ---------------------------
 genai.configure(api_key=api_key)
 
-# Use stable model
-model = genai.GenerativeModel("models/gemini-1.5-flash")
+# ✅ USE ONLY THIS MODEL
+model = genai.GenerativeModel("gemini-pro")
 
-st.title("🧪 Gemini API Test")
-
+# ---------------------------
+# AI FUNCTION
+# ---------------------------
 def ai_explain(prompt):
     try:
         response = model.generate_content(prompt)
@@ -26,8 +37,9 @@ def ai_explain(prompt):
     except Exception as e:
         return f"⚠️ Error: {e}"
 
-st.success("✅ Gemini API key detected")
-
+# ---------------------------
+# TEST BUTTON
+# ---------------------------
 if st.button("Test Gemini"):
-    st.write(ai_explain("Explain SIP investment in one simple line"))
-
+    result = ai_explain("Say hello to a beginner investor in one sentence.")
+    st.write(result)
