@@ -4,7 +4,7 @@ import os
 
 st.title("🧪 Gemini API Test")
 
-# Load API key
+# Load API Key
 api_key = os.getenv("GEMINI_API_KEY")
 
 if not api_key:
@@ -28,3 +28,4 @@ st.success("✅ Gemini API key detected")
 
 st.subheader("🔍 Test Output")
 st.write(ai_explain("Explain investing to a beginner in one simple line"))
+
