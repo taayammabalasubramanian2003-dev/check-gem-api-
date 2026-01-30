@@ -1,2 +1,7 @@
 streamlit
-google-generativeai
+yfinance
+pandas
+numpy
+plotly
+google-generativeai>=0.4.1
+
